@@ -2,10 +2,11 @@ from car_manager.settings import *
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'travis_ci_db',
-        'USER': 'travis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'carmgr',
+        'USER': 'postgres',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
