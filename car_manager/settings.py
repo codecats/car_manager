@@ -85,17 +85,6 @@ DATABASES = {
     }
 }
 
-if os.getenv('BUILD_ON_TRAVIS', None):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'travis_ci_db',
-            'USER': 'travis',
-            'PASSWORD': '',
-            'HOST': '127.0.0.1',
-        }
-    }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
