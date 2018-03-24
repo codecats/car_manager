@@ -2,7 +2,7 @@ language: python
 python:
   - "3.5"
   - "3.6"
-services: mysql
+services: postgresql
 
 env:
   - DJANGO=2.0.3 DJANGO_SETTINGS_MODULE="car_manager.settings_travis"
