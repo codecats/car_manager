@@ -23,26 +23,28 @@ class CarController(object):
         return sorted(sample(range(Battery.MIN_ID, Battery.MIN_ID + (n * 2), 2), n))
 
     @cached_property
-    def battery(self):
+    def battery_number(self):
         '''
         always return battery with greatest number
         :return:
         '''
-        return self.car.batteries.all().order_by('-number').first()
+        return getattr(self.car.batteries.all().order_by('-number').first(), 'number', 0)
+
+    @cached_property
+    def battery_id(self):
+        '''
+        always return battery with greatest number
+        :return:
+        '''
+        return getattr(self.car.batteries.all().order_by('-ID').first(), 'ID', Battery.MIN_ID - 2)
 
     def setup_unique_battery(self, instance):
         # get initial number and id based on already existing batteries
         if self.id is None:
             # we are sure that number is unique because of ordering in battery property
-            if self.battery is not None:
-                self.number, self.id = self.battery.number + 1, self.battery.ID + 2
-            else:
-                self.number, self.id = 1, Battery.MIN_ID
+            self.number, self.id = self.battery_number + 1, self.battery_id + 2
         # this battery don't have ID, saved instances is set up
         if instance.pk is None:
-            # probably ID is unique but we have to check for the reason if somebody changed it manually
-            while self.car.batteries.filter(ID=self.id).exists():
-                self.id += 2
             instance.number, instance.ID = self.number, self.id
             self.number += 1
             self.id += 2
